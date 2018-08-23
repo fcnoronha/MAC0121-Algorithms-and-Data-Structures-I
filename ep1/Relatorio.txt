@@ -1,0 +1,13 @@
+--	Relatorio sobre o EP1 - Conjectura de Collatz	--
+
+	Para a realização deste EP, foi considerada a definição da conjectura de Collatz, onde N = N/2 se n for par
+e N = N*3 + 1 se N for impar. Desta maneira foi possivel calcular a quantidade de passos necessarios para
+um numero N qualquer tender a 1. Sendo que N estava dentro de um intervalo definido.
+	Com o intuito de economizar recursos do computador, pois deviam ser calculados todos os numeros dentro de
+um dado intervalo, foi utilizada a ideia de memorização, guardando o numero de passos que um numero N demora 
+ate tender a 0, assim, caso haja a recorrencia de algum N nos calculos realizados para o intervalo, não sera
+necessario repetir as operações.
+	Ademais, o calculo esta limitado ao tamanho de LONG LONG INT, sendo que o maior valor que uma variavel N
+pode tomar, levando em conta as restrições do tipo, é de 2^64.
+	Para finalizar, também foi utilizado o conceito de ponteiros, visto em aula, para passar parametros dentro
+da execução do programa, o que deixa o programa mais simples, agilizando o processamento. 
