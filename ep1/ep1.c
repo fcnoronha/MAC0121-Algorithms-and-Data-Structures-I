@@ -7,9 +7,13 @@ long long int collatz (long long int n, long long int *P){
 		passos para um numero n tender a 1 na conjectura de Collatz, retorando 
 		este valor.																*/
 
+	// Uso da momerizaçao e base da recursao.
+	if (n == 1) return(0);
+
 	// Calcula de maneira interativa caso o numero seja maior que 10000000, no 
 	// caso, maior que o numero de posiçoes que podem ser armazenado na memoria.
 	long long int r = 0;
+
 	while(n >= 1000000){
 		if (n%2 == 0) n = n/2; 
 		else n = n*3 + 1;
@@ -17,20 +21,23 @@ long long int collatz (long long int n, long long int *P){
 	}
 
 	// Uso da momerizaçao e base da recursao.
-	if (P[n] != 0 || n == 1) return P[n];
+	// if (P[n] != -1) return (P[n] + r);
 
 	// Calculo recursivo do numero de passos, sendo que a posiçao n da array passos
 	// armazena o numero de passos necessarios para o elemento n tender a 1. 
 	if (n%2 == 0) P[n] = collatz(n/2, P) + 1 + r;
-	else P[n] = collatz(3*n + 1, P) + 1 + r;
+	else P[n] = collatz(n*3 + 1, P) + 1 + r;
 
 	return P[n];
 }
 
 int main(){	
-	// Variavel usada para armazenar resultados de calculos anteriores
+	// Variavel usada para armazenar resultados de calculos anteriores.
 	long long int *passos;
-	passos = malloc(1000000 * sizeof(long long int));
+	passos = malloc(1000003 * sizeof(long long int));
+
+	// Inicializando valores na array.
+	for (long long int i = 0; i < 1000003; i++) passos[i] = -1;
 
 	// Recebendo intervalo no qual sera calculada a conjectura.
 	long long int ini, fim;
@@ -38,7 +45,6 @@ int main(){
 
 	// Definindo base de resultados.
 	passos[1] = 0;
-	passos[0] = 1;
 
 	// Imprimindo o resultado para cada elemento do intervalo.
 	for (long long int n = ini; n <= fim; n++){
