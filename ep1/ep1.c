@@ -1,39 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-long long int collatz (long long int n, long long int *P){
+// Variavel global que ira ser a memoria.
+long long int *passos;
+
+int collatz (long long int n){
 
 	/*  Funçao que faz uso de recursao e momorizaçao para calcular o numero de 
 		passos para um numero n tender a 1 na conjectura de Collatz, retorando 
 		este valor.																*/
 
-	// Uso da momerizaçao e base da recursao.
-	if (n == 1) return(0);
+	// Base da recursao.
+	if (n == 1) return passos[n];
 
-	// Calcula de maneira interativa caso o numero seja maior que 10000000, no 
-	// caso, maior que o numero de posiçoes que podem ser armazenado na memoria.
-	long long int r = 0;
+	// Uso da momerizaçao.
+	if (n < 1000000	) if (passos[n] != -1) return (passos[n]);
 
-	while(n >= 1000000){
-		if (n%2 == 0) n = n/2; 
-		else n = n*3 + 1;
-		r++;
-	}
+	// Calculo recursivo do numero de passos.
+	int p;
+	if (n%2 == 0) p = collatz(n/2) + 1;
+	else p = collatz(n*3 + 1) + 1;
 
-	// Uso da momerizaçao e base da recursao.
-	// if (P[n] != -1) return (P[n] + r);
+	// Caso seja possivel, memoriza o numero de passos.
+	if (n < 1000000) passos[n] = p;  
 
-	// Calculo recursivo do numero de passos, sendo que a posiçao n da array passos
-	// armazena o numero de passos necessarios para o elemento n tender a 1. 
-	if (n%2 == 0) P[n] = collatz(n/2, P) + 1 + r;
-	else P[n] = collatz(n*3 + 1, P) + 1 + r;
-
-	return P[n];
+	return p;
 }
 
 int main(){	
-	// Variavel usada para armazenar resultados de calculos anteriores.
-	long long int *passos;
+	// Definindo um limite de 1000003 para a array de memorizaçao.
 	passos = malloc(1000003 * sizeof(long long int));
 
 	// Inicializando valores na array.
@@ -43,12 +38,12 @@ int main(){
 	long long int ini, fim;
 	scanf("%Li%Li", &ini, &fim);
 
-	// Definindo base de resultados.
+	// Definindo base.
 	passos[1] = 0;
 
 	// Imprimindo o resultado para cada elemento do intervalo.
 	for (long long int n = ini; n <= fim; n++){
-		printf("%Li\n", collatz(n, passos));
+		printf("%d\n", collatz(n));
 	}
 
 	// Liberando memoria 
