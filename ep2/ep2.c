@@ -6,7 +6,7 @@
 typedef struct {
 	int i;
 	int j;
-	int tamPal[2];
+	int tamPal[2]; // [0] - coluna / [1] - linha
 	int idxPal[2];	
 }vertice;
 
@@ -45,6 +45,54 @@ void setarTamanhos(vertice *ver, char **tab, int m, int n){
 	printf("valor 1 t: %d\n", t);
 	ver->tamPal[1] = t;
 
+}
+
+void montarTabuleiro(vertice **ver, char **tab, char **pal, int nVer, int m, int n){
+	for (int i = 0; i < m; i++)
+		for (int j = 0; j < n; j++)
+			if (tab[i][j] != '*') 
+				tab[i][j] = '#'; // Reinicializando tabuleiro
+
+	for (int i = 0; i < nVer; i++){	// Percorrendo todos vertices
+		for (int j = 0; j < 2; j++){ // Percorrendo posiçoes posiveis dentro do vertice
+			int auxTam = ver[i]->tamPal[j]; // Variaveis que auxilian na posiçao
+			int auxIdx = ver[i]->idxPal[j];
+
+			if (auxIdx >= 0){ // Se existe palavra idexada a aquela posicao
+				char *auxPal = pal[auxIdx];
+				if (j == 0){ // Caso ela esteja numa coluna
+					int auxI = ver[i]->i + 1;
+					int auxJ = ver[i]->j;
+
+					for (int k = 0; k < TamanhoPalavra(auxPal); k++){
+						tab[auxI][auxJ] = auxPal[k]; // Passando a palvra para o tabuleiro
+						auxI++;
+					}
+				}
+				if (j == 1){ // Caso ela esteja numa linha
+					int auxI = ver[i]->i;
+					int auxJ = ver[i]->j + 1;
+
+					for (int k = 0; k < TamanhoPalavra(auxPal); k++){
+						tab[auxI][auxJ] = auxPal[k]; // Passando a palvra para o tabuleiro
+						auxJ++;
+					}
+				}
+			}
+		}
+	}
+}
+
+int vaiDar(char **tab, char *pal, int i, int j, int ori){
+
+	for (int k = 1; k <= TamanhoPalavra(pal); k++){
+		if (ori == 0) // Caso a palavra tenha que caber em uma coluna
+			// Caso aquela posicao ja esteja com outra letra
+			if (tab[i+k][j] != pal[k-1] && tab[i+k][j] != '#') return 0;
+		else 
+			if (tab[i][j+k] != pal[k-1] && tab[i][j+k] != '#') return 0;
+	}
+	return 1; // #VaiDarCerto
 }
 
 int main(){
@@ -113,6 +161,8 @@ int main(){
 				backestep. E a unica variavel que eu vou alterar no vertice vai ser a idxPal, definindo-a
 				como -1 se nao houver nenhuma palavra ali, usando essas informaçoes na funcao de montagem
 				do tabuleiro.
+
+				testar montarTabuleiro e vaiDar
 			*/
 		}
 
