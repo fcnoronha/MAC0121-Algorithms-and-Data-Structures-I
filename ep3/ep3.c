@@ -5,7 +5,7 @@ int elementoMaximal(int *v, int c, int n){
 	
 	// Retorna o indice do elemento maximal encontrado a partir de um começo 'c'
 	int max = c;
-	for (c; c < n; c++)
+	for (; c < n; c++)
 		if (v[c] > v[max])
 			max = c;
 
