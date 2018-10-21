@@ -1,3 +1,6 @@
+// Felipe Castro de Noronha
+// 10737032
+
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -56,7 +59,7 @@ int main(){
 		// Flipo o vetor novamente, trazendo o ultimo elemento para a minha posiçao
 		felipe(d, i, n);
 	}
-
+	
 	printf("\n");
 
 	// Liberando a memoria
