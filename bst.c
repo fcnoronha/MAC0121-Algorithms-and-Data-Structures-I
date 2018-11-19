@@ -179,6 +179,33 @@ node *turnRight(node *root){
 	return root;
 }
 
+node *insertH(node *root, int x){
+	// Insert keeping 'log n' height. Make root receive this 
+	if(root == NULL){
+		root = malloc(sizeof(node));
+		root->val = x;
+		root->l = root->r = root->anc = NULL;
+		root->alt = random(MAX); // Have to deal with this new atribute
+		return(root);
+	}
+
+	if(root->val > x){
+		root->l = insertH(root->l, x);
+		if(root->l->alt > root->alt){
+			root = turnRight(root);
+		}
+	}
+
+	else if(root->val < x){
+		root->r = insertH(root->r, x);
+		if(root->r->alt > root->alt){
+			root = turnLeft(root);
+		}
+	}
+
+	return root;
+}
+
 int main(){
 	printf("Type the number of elements in the tree: \n");
 	int n;

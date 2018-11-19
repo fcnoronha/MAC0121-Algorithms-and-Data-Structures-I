@@ -6,7 +6,7 @@ void bubble(int v[], int n){
 
 	for (int i = 1; i < n && trocou; i++){
 		trocou = 0;
-		for (int j = 0; j < n - 1; j++){
+		for (int j = 0; j < n - i; j++){
 			if (v[j+1] < v[j]){
 				int aux = v[j];
 				v[j] = v[j+1];
